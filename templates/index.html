@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero" style="border-bottom: 2px solid var(--text-color); padding-bottom: 4rem; margin-bottom: 4rem;">
+    <h1
+        style="font-size: 4rem; line-height: 1; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 0.5rem;">
+        <span class="logo-bgs">Burak Güngör's</span>
+        <span class="logo-blog">Lab</span>
+    </h1>
+    <p class="content-text" style="font-size: 1.5rem; max-width: 45ch; margin: 1.5rem 0 2rem 0;">
+        Systems engineering, AI, and low-level research. I build tools from the ground up, focusing on implementation
+        details and direct solutions.
+    </p>
+    <div class="quick-skills"
+        style="display: flex; gap: 2rem; font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--secondary-text);">
+        <span>C++ / Rust / C99</span>
+        <span>&bull;</span>
+        <span>PyTorch / Transformers</span>
+        <span>&bull;</span>
+        <span>Compiler Design</span>
+    </div>
+</section>
+<section class="latest-writing">
+    <h2
+        style="font-family: var(--font-mono); text-transform: uppercase; font-size: 1rem; color: var(--secondary-text); margin-bottom: 2rem;">
+        Technical Writing</h2>
+    {% set blog = get_section(path="blog/_index.md") %}
+    <div class="writing-list">
+        {% for page in blog.pages | slice(end=3) %}
+        <article style="margin-bottom: 2rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 500; margin-bottom: 0.5rem;"><a href="{{ page.permalink }}"
+                    style="text-decoration: none; color: inherit; border-bottom: 1px solid var(--border-color);">{{
+                    page.title }}</a></h3>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--secondary-text);">{{
+                page.date | date(format="%Y-%m-%d") }}</div>
+        </article>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 2rem;">
+        <a href="/blog"
+            style="font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; font-weight: 600;">→
+            Full Archive</a>
+    </div>
+</section>
+
+<section class="featured-engineering">
+    <h2
+        style="font-family: var(--font-mono); text-transform: uppercase; font-size: 1rem; color: var(--secondary-text); margin-bottom: 2rem;">
+        Engineering Projects</h2>
+    {% set projects = get_section(path="projects/_index.md") %}
+    <div class="work-list">
+        {% for page in projects.pages | slice(end=3) %}
+        <article style="margin-bottom: 2rem; border-left: 2px solid var(--border-color); padding-left: 1.5rem;">
+            <h3 style="font-size: 1.1rem; font-family: var(--font-mono); margin-bottom: 0.25rem;"><a
+                    href="{{ page.permalink }}" style="text-decoration: none; color: inherit;">{{ page.title }}</a>
+            </h3>
+            <p style="font-size: 0.9rem; color: var(--secondary-text); margin-bottom: 0.5rem;">{{ page.description |
+                truncate(length=162) }}</p>
+        </article>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 2rem;">
+        <a href="/projects"
+            style="font-family: var(--font-mono); text-transform: uppercase; font-size: 0.8rem; font-weight: 600;">→
+            Project Catalog</a>
+    </div>
+</section>
+</div>
+{% endblock content %}

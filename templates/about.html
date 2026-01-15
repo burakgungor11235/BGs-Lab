@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}About | bgslabs{% endblock %}
+
+{% block og_title %}About | bgslabs{% endblock %}
+
+{% block twitter_title %}About | bgslabs{% endblock %}
+
+{% block content %}
+<div class="content-text" style="max-width: var(--content-width-wide); margin: 0 auto; padding: var(--space-8) var(--space-4);">
+    <h1 style="font-size: 2.5rem; font-weight: 500; margin-bottom: var(--space-6);">About Me</h1>
+
+    <div class="about-content">
+        {{ section.content | safe }}
+    </div>
+
+    <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+        <h2 style="font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-4);">
+            Connect
+        </h2>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+            <a href="https://github.com/burakgungor11235" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-interactive); text-decoration: none;">
+                GitHub →
+            </a>
+            <a href="https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-interactive); text-decoration: none;">
+                LinkedIn →
+            </a>
+            <a href="mailto:burakgungor11235@gmail.com" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-interactive); text-decoration: none;">
+                Email →
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.about-content h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+}
+
+.about-content p {
+    margin-bottom: var(--space-4);
+    line-height: var(--line-height-relaxed);
+}
+
+.about-content ul {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-4);
+}
+
+.about-content li {
+    margin-bottom: var(--space-2);
+}
+
+.about-content a {
+    color: var(--accent-interactive);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.about-content a:hover {
+    border-bottom-color: var(--accent-interactive);
+}
+</style>
+{% endblock content %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About",
+    "description": "Burak Güngör - Data-driven engineering enthusiast. Belief isn't enough. I have to know.",
+    "mainEntity": {
+        "@type": "Person",
+        "@id": "https://burakgungor.com#person",
+        "name": "Burak Güngör",
+        "url": "https://burakgungor.com",
+        "jobTitle": "Student",
+        "description": "Data-driven engineering enthusiast. Belief isn't enough. I have to know.",
+        "sameAs": [
+            "https://github.com/burakgungor11235",
+            "https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
+        ],
+        "knowsAbout": [
+            "Low-Level Programming",
+            "Artificial Intelligence",
+            "Machine Learning",
+            "C",
+            "C++",
+            "PyTorch",
+            "x86_64 Architecture",
+            "German Language",
+            "Data-Driven Engineering",
+            "First Principles Thinking"
+        ]
+    }
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://burakgungor.com#person",
+    "name": "Burak Güngör",
+    "url": "https://burakgungor.com",
+    "jobTitle": "Student",
+    "description": "Data-driven engineering enthusiast. Belief isn't enough. I have to know.",
+    "sameAs": [
+        "https://github.com/burakgungor11235",
+        "https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
+    ],
+    "knowsAbout": [
+        "Low-Level Programming",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "C",
+        "C++",
+        "PyTorch",
+        "x86_64 Architecture",
+        "German Language",
+        "Data-Driven Engineering",
+        "First Principles Thinking"
+    ]
+}
+</script>
+{% endblock %}

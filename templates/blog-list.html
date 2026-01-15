@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="blog-list">
+    <h1 style="font-family: var(--font-mono);">Blog</h1>
+    <div class="detailed-grid">
+        {% for page in section.pages %}
+        <article class="blog-entry"
+            style="border-top: 1px solid var(--text-color); padding-top: 2rem; margin-bottom: 4rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;">
+            <div class="blog-meta">
+                <h2 style="font-family: var(--font-mono); font-size: 1.5rem; margin-top: 0;"><a
+                        href="{{ page.permalink }}" style="text-decoration: none; color: inherit;">{{ page.title }}</a>
+                </h2>
+                <div
+                    style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--secondary-text); text-transform: uppercase;">
+                    {{ page.date | date(format="%B %d, %Y") }}
+                </div>
+            </div>
+            <div class="blog-brief">
+                <p class="content-text" style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    {{ page.description | truncate(length=300) }}
+                </p>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem;">
+                    <a href="{{ page.permalink }}">→ Read full post</a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}

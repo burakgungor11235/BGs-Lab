@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block extra_head %}
+<link id="giallo-dark" rel="stylesheet" type="text/css" href="/giallo-dark.css" media="(prefers-color-scheme: dark)" />
+<link id="giallo-light" rel="stylesheet" type="text/css" href="/giallo-light.css"
+    media="(prefers-color-scheme: light)" />
+
+<!-- BreadcrumbList Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{ config.base_url }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Technical Writing",
+            "item": "{{ config.base_url }}/blog"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "{{ page.title }}",
+            "item": "{{ page.permalink }}"
+        }
+    ]
+}
+</script>
+
+{% endblock extra_head %}
+
+{% block content %}
+<article class="blog-post">
+    <nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
+        <ol style="display: flex; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-tertiary); list-style: none; padding: 0; margin: 0;">
+            <li><a href="{{ config.base_url }}" style="color: var(--accent-interactive); text-decoration: none;">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/blog" style="color: var(--accent-interactive); text-decoration: none;">Technical Writing</a></li>
+            <li><span>/</span></li>
+            <li aria-current="page" style="color: var(--text-secondary);">{{ page.title | truncate(length=30) }}</li>
+        </ol>
+    </nav>
+
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+        <div class="metadata">
+            {{ page.date | date(format="%B %d, %Y") }}
+            {% if page.taxonomies.tags %}
+            | Tags: {{ page.taxonomies.tags | join(sep=", ") }}
+            {% endif %}
+            {% if page.word_count %}
+            <span class="reading-time">· {{ page.word_count / 200 | round }} min read</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="post-layout">
+        <div class="content-text">
+            {{ page.content | safe }}
+        </div>
+
+        {% if page.toc %}
+        <aside class="post-toc">
+            <nav>
+                <ul class="toc-list">
+                    {% for h1 in page.toc %}
+                    <li>
+                        <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+                        {% if h1.children %}
+                        <ul>
+                            {% for h2 in h1.children %}
+                            <li>
+                                <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </aside>
+        {% endif %}
+    </div>
+</article>
+{% endblock content %}

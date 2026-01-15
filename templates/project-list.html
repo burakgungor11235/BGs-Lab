@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="project-catalog">
+    <h1 style="font-family: var(--font-mono); margin-bottom: 3rem;">Project Catalog</h1>
+
+    <div class="detailed-grid">
+        {% for page in section.pages %}
+        <article class="project-entry"
+            style="border-top: 1px solid var(--text-color); padding-top: 2rem; margin-bottom: 4rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;">
+            <div class="project-meta">
+                <h2 style="font-family: var(--font-mono); font-size: 1.5rem; margin-top: 0;"><a
+                        href="{{ page.permalink }}" style="text-decoration: none; color: inherit;">{{ page.title }}</a>
+                </h2>
+                <div
+                    style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--secondary-text); text-transform: uppercase; margin-bottom: 1rem;">
+                    {{ page.date | date(format="%Y") }}
+                </div>
+                <div class="stack-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    {% if page.extra.stack %}
+                    {% for tech in page.extra.stack %}
+                    <span class="tech-tag">{{ tech }}</span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="project-brief">
+                <p class="content-text" style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    {{ page.description }}
+                </p>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem;">
+                    <a href="{{ page.permalink }}">→ Detailed technical breakdown</a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}

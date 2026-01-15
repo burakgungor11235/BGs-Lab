@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="font-family: var(--font-mono);">Tags</h1>
+<ul>
+    {% for term in terms %}
+    <li><a href="{{ term.permalink }}">{{ term.name }}</a> ({{ term.pages | length }})</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

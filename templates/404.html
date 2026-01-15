@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Page Not Found | bgslabs{% endblock %}
+
+{% block og_title %}404 - Page Not Found | bgslabs{% endblock %}
+
+{% block twitter_title %}404 - Page Not Found | bgslabs{% endblock %}
+
+{% block content %}
+<div class="content-text" style="max-width: var(--content-width); margin: 0 auto; padding: var(--space-8) var(--space-4);">
+    <h1 style="font-size: 6rem; font-weight: 200; line-height: 1; margin-bottom: var(--space-4); color: var(--text-primary);">
+        404
+    </h1>
+    <p style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: var(--space-6);">
+        The page you're looking for doesn't exist or has been moved.
+    </p>
+
+    <div style="background: var(--code-bg); border-left: 4px solid var(--accent-interactive); padding: var(--space-4); margin-bottom: var(--space-6);">
+        <p style="margin: 0; font-family: var(--font-mono); font-size: 0.9rem;">
+            If you believe this is an error, please <a href="mailto:burakgungor11235@gmail.com" style="color: var(--accent-interactive);">contact me</a>.
+        </p>
+    </div>
+
+    <nav style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+        <a href="{{ config.base_url }}" style="font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; color: var(--accent-interactive); text-decoration: none;">
+            → Home
+        </a>
+        <a href="/blog" style="font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; color: var(--accent-interactive); text-decoration: none;">
+            → Technical Writing
+        </a>
+        <a href="/projects" style="font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; color: var(--accent-interactive); text-decoration: none;">
+            → Engineering Projects
+        </a>
+    </nav>
+
+    <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+        <h2 style="font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-4);">
+            Recent Posts
+        </h2>
+        {% set blog = get_section(path="blog/_index.md") %}
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            {% for post in blog.pages | slice(end=3) %}
+            <li style="margin-bottom: var(--space-2);">
+                <a href="{{ post.permalink }}" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-color);">
+                    {{ post.title }}
+                </a>
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-tertiary); margin-left: var(--space-2);">
+                    {{ post.date | date(format="%Y-%m-%d") }}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}
