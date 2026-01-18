@@ -182,16 +182,6 @@
 
     {% block extra_head %}{% endblock %}
 
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0207RCRX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('consent', 'default', {
-        'analytics_storage': 'denied'
-      });
-    </script>
 </head>
 
 <body>
@@ -479,7 +469,6 @@
     }
 
     function enableAnalytics() {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
       loadUmami();
     }
 
