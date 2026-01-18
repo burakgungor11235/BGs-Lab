@@ -9,7 +9,6 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 
-
 WIDTH = 1200
 HEIGHT = 630
 PADDING = 64
@@ -53,12 +52,16 @@ def parse_frontmatter(content: str) -> dict:
             "title": data.get("title", ""),
             "description": data.get("description", ""),
             "date": data.get("date", ""),
-            "tags": data.get("taxonomies", {}).get("tags", [])
-            if isinstance(data.get("taxonomies"), dict)
-            else [],
-            "categories": data.get("taxonomies", {}).get("categories", [])
-            if isinstance(data.get("taxonomies"), dict)
-            else [],
+            "tags": (
+                data.get("taxonomies", {}).get("tags", [])
+                if isinstance(data.get("taxonomies"), dict)
+                else []
+            ),
+            "categories": (
+                data.get("taxonomies", {}).get("categories", [])
+                if isinstance(data.get("taxonomies"), dict)
+                else []
+            ),
             "stack": extra.get("stack", []),
         }
     except Exception as e:

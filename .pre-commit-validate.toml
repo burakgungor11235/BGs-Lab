@@ -1,0 +1,18 @@
+# TOML validation rules for pre-commit
+# Focus on critical issues that break builds
+
+[rule]
+# Require title in frontmatter
+pattern = '^title\s*='
+message = "Missing 'title' in frontmatter"
+level = error
+
+# Require date in frontmatter
+pattern = '^date\s*='
+message = "Missing 'date' in frontmatter"
+level = error
+
+# Warn on missing description (optional but recommended)
+pattern = '^description\s*='
+message = "Missing 'description' in frontmatter"
+level = warning
