@@ -470,8 +470,17 @@
       }
     }
 
+    function loadUmami() {
+      const script = document.createElement('script');
+      script.defer = true;
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', 'f5944805-c487-4a5a-ab0e-5cccaa1a6a5c');
+      document.head.appendChild(script);
+    }
+
     function enableAnalytics() {
       gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      loadUmami();
     }
 
     function saveConsent(analytics) {
