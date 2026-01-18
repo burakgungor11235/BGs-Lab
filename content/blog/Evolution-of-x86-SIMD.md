@@ -938,7 +938,7 @@ business. And honestly? That's what makes it fun.
 
 ---
 
-## Appendix A: x86_64 SIMD Syntax Reference
+## Appendix A: x86 SIMD Syntax Reference
 
 This reference provides a comprehensive overview of x86 SIMD instruction
 syntax, register nomenclature, and assembly conventions used throughout
