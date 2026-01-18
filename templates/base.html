@@ -13,8 +13,8 @@
     <link rel="canonical" href="{{ current_url | default(value=config.base_url) }}">
 
     <!-- RSS Discovery -->
-    <link rel="alternate" type="application/rss+xml" title="bgslabs - All Posts" href="{{ get_url(path='blog/rss.xml', trailing_slash=false) }}">
-    <link rel="alternate" type="application/rss+xml" title="bgslabs - Projects" href="{{ get_url(path='projects/rss.xml', trailing_slash=false) }}">
+    <link rel="alternate" type="application/rss+xml" title="BGs Lab - All Posts" href="{{ get_url(path='blog/rss.xml', trailing_slash=false) }}">
+    <link rel="alternate" type="application/rss+xml" title="BGs Lab - Projects" href="{{ get_url(path='projects/rss.xml', trailing_slash=false) }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -113,7 +113,7 @@
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "bgslabs",
+                "name": "BGs Lab",
                 "logo": {
                     "@type": "ImageObject",
                     "url": "{{ get_url(path='logo.png', absolute=true) }}"
@@ -135,7 +135,7 @@
         {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "bgslabs",
+            "name": "BGs Lab",
             "url": "{{ config.base_url }}",
             "description": "{{ config.description }}",
             "author": {
@@ -160,7 +160,7 @@
     {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "bgslabs",
+        "name": "BGs Lab",
         "url": "{{ config.base_url }}",
         "description": "{{ config.description }}",
         "logo": "{{ get_url(path='logo.png', absolute=true) }}",
@@ -392,7 +392,7 @@
     <div id="cookie-consent" class="cookie-consent" style="display: none;">
       <p class="cookie-text">
         We use cookies for analytics to improve your experience.
-        <a href="/BGs-Lab/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
       </p>
       <div class="cookie-actions">
         <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
@@ -457,7 +457,7 @@
 
     <script>
     // Cookie Consent Logic
-    const CONSENT_KEY = 'bgslabs_consent';
+    const CONSENT_KEY = 'BGsLab_consent';
 
     function initConsent() {
       const banner = document.getElementById('cookie-consent');

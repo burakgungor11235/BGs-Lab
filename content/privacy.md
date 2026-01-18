@@ -1,6 +1,6 @@
 +++
 title = "Privacy Policy"
-description = "Privacy policy for bgslabs"
+description = "Privacy policy for BGs Lab"
 template = "privacy.html"
 date = 2026-01-16
 +++
@@ -24,7 +24,7 @@ This website uses Google Analytics 4 to understand how visitors engage with our 
 
 We use a single cookie to remember your privacy preferences:
 
-- `bgslabs_consent`: Stores your choice (accept/reject) for analytics
+- `BGsLab_consent`: Stores your choice (accept/reject) for analytics
 
 ## Third-Party Services
 
