@@ -1,8 +1,9 @@
-name: Build and deploy Zola website
+name: Build and deploy bgslabs
 on:
   push:
     branches:
     - master
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -19,10 +20,20 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6.0.1
-      
-      - name: pre-build
-        run: bash build.sh
-        
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install Pillow tomli
+
+      - name: Generate OG images
+        run: python scripts/generate_og.py
+
       - name: Build Zola + upload Pages artifact
         uses: getzola/github-pages@066755243e69f508fd1a74739fbf1a65f656c790
         with:
@@ -33,8 +44,6 @@ jobs:
     needs: build
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
