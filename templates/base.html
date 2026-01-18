@@ -181,6 +181,17 @@
     </script>
 
     {% block extra_head %}{% endblock %}
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0207RCRX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied'
+      });
+    </script>
 </head>
 
 <body>
@@ -375,6 +386,107 @@
                 }
             });
         }
+    </script>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent" class="cookie-consent" style="display: none;">
+      <p class="cookie-text">
+        We use cookies for analytics to improve your experience.
+        <a href="/BGs-Lab/privacy">Privacy Policy</a>
+      </p>
+      <div class="cookie-actions">
+        <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
+        <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button>
+      </div>
+    </div>
+
+    <style>
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-color);
+      border-top: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      z-index: 9999;
+      color: var(--text-primary);
+    }
+    .cookie-text {
+      margin: 0;
+      color: var(--text-primary);
+    }
+    .cookie-text a {
+      color: var(--accent-interactive);
+    }
+    .cookie-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .cookie-btn {
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .cookie-btn-primary {
+      background: var(--accent-interactive);
+      color: #ffffff;
+    }
+    .cookie-btn-primary:hover {
+      background: #0353e9;
+    }
+    .cookie-btn-secondary {
+      background: var(--code-bg);
+      color: var(--text-primary);
+    }
+    .cookie-btn-secondary:hover {
+      background: var(--text-secondary);
+      color: var(--bg-color);
+    }
+    </style>
+
+    <script>
+    // Cookie Consent Logic
+    const CONSENT_KEY = 'bgslabs_consent';
+
+    function initConsent() {
+      const banner = document.getElementById('cookie-consent');
+      const consent = localStorage.getItem(CONSENT_KEY);
+      if (!consent) {
+        banner.style.display = 'flex';
+      } else {
+        const data = JSON.parse(consent);
+        if (data.analytics) enableAnalytics();
+      }
+    }
+
+    function enableAnalytics() {
+      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    }
+
+    function saveConsent(analytics) {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify({
+        analytics: analytics,
+        timestamp: new Date().toISOString()
+      }));
+      document.getElementById('cookie-consent').style.display = 'none';
+      if (analytics) enableAnalytics();
+    }
+
+    document.getElementById('cookie-accept').onclick = function() { saveConsent(true); };
+    document.getElementById('cookie-reject').onclick = function() { saveConsent(false); };
+
+    document.addEventListener('DOMContentLoaded', initConsent);
     </script>
 </body>
 

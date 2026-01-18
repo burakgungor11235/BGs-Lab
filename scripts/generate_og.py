@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-OG Image Generator for bgslabs
+OG Image Generator for bgs lab
 """
 
 import re
@@ -167,7 +167,7 @@ def generate_og_image(
     blog_font = load_font("IBMPlexSans-Regular.ttf", 20)
 
     bgs_text = "bg"
-    blog_text = "slabs"
+    blog_text = "s lab"
 
     bgs_bbox = bgs_font.getbbox(bgs_text)
     blog_bbox = blog_font.getbbox(blog_text)
@@ -302,7 +302,7 @@ def generate_og_image(
         fill=CARBON_COLORS["text_primary"],
     )
 
-    site_text = "bgslabs"
+    site_text = "bgs lab"
     site_bbox = small_font.getbbox(site_text)
     draw.text(
         (PADDING + 20, footer_y + 15),
@@ -373,7 +373,7 @@ def process_content_directory(content_dir: Path):
 
 def main():
     """Main entry point."""
-    print("Generating OG images for bgslabs...")
+    print("Generating OG images for bgs lab...")
     print(f"Content directory: {CONTENT_DIR}")
     print(f"Output directory: {OG_IMAGES_DIR}")
     print("-" * 50)

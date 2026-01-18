@@ -1,11 +1,14 @@
 # The URL the site will be built for
 base_url = "http://burakgungor11235.github.io/BGs-Lab/"
-title = "bgslabs"
+title = "bgs lab"
 description = "A data-driven engineering lab."
 
 # Whether to generate feed files
 generate_feeds = true
-taxonomies = [{ name = "tags", feed = true },{ name = "categories", feed = true }]
+taxonomies = [
+	{ name = "tags", feed = true },
+	{ name = "categories", feed = true },
+]
 
 [extra]
 author = "Burak Güngör"
@@ -13,9 +16,9 @@ accent_color = "#0062ff" # IBM Blue
 
 # Navigation
 menu = [
-    { name = "Blog", url = "/BGs-Lab/blog" },
-    { name = "Projects", url = "/BGs-Lab/projects" },
-    { name = "About", url = "/BGs-Lab/about" },
+	{ name = "Blog", url = "/BGs-Lab/blog" },
+	{ name = "Projects", url = "/BGs-Lab/projects" },
+	{ name = "About", url = "/BGs-Lab/about" },
 ]
 
 [markdown]
