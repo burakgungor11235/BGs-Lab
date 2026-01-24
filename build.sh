@@ -6,15 +6,34 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "Generating OG images..."
-python3 "$SCRIPT_DIR/scripts/generate_og.py"
+preview() {
+	echo "Generating OG images..."
+	python3 "$SCRIPT_DIR/scripts/generate_og.py"
 
-echo ""
-echo "Building site with Zola..."
-zola build
+	echo ""
+	echo "Starting preview server at http://localhost:8787 ..."
+	zola build --base-url http://localhost:8787
+	cd worker
+	npm run dev
+}
 
-# Copy redirect.html to index.html at root for proper GitHub Pages redirect
-cp "$SCRIPT_DIR/static/redirect.html" "$SCRIPT_DIR/public/index.html"
+build() {
+	echo "Generating OG images..."
+	python3 "$SCRIPT_DIR/scripts/generate_og.py"
 
-echo ""
-echo "Build complete! Output in public/"
+	echo ""
+	echo "Building site with Zola for production (https://bgslabs.org)..."
+	zola build --base-url https://bgslabs.org
+
+	echo ""
+	echo "Build complete! Output in public/"
+}
+
+case "${1:-build}" in
+preview)
+	preview
+	;;
+build | deploy | *)
+	build
+	;;
+esac
