@@ -1,163 +1,203 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ lang }}" data-theme="light">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{{ config.title }}{% endblock %}</title>
-    <meta name="description" content="{{ config.description }}">
-    <meta name="author" content="Burak Güngör">
-    <meta name="keywords" content="systems engineering, AI, low-level programming, compiler design, C++, Rust, PyTorch, x86_64, SIMD">
+    <meta name="description" content="{{ config.description }}" />
+    <meta name="author" content="Burak Güngör" />
+    <meta
+      name="keywords"
+      content="systems engineering, AI, low-level programming, compiler design, C++, Rust, PyTorch, x86_64, SIMD"
+    />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ current_url | default(value=config.base_url) }}">
+    <link
+      rel="canonical"
+      href="{{ current_url | default(value=config.base_url) }}"
+    />
 
     <!-- RSS Discovery -->
-    <link rel="alternate" type="application/rss+xml" title="BGs Lab - All Posts" href="{{ get_url(path='blog/rss.xml', trailing_slash=false) }}">
-    <link rel="alternate" type="application/rss+xml" title="BGs Lab - Projects" href="{{ get_url(path='projects/rss.xml', trailing_slash=false) }}">
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="BGs Lab - All Posts"
+      href="{{ get_url(path='blog/rss.xml', trailing_slash=false) }}"
+    />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="BGs Lab - Projects"
+      href="{{ get_url(path='projects/rss.xml', trailing_slash=false) }}"
+    />
 
+    <!-- Security: DOMPurify for XSS protection -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"
+      integrity="sha512-+hnQfguUAvDvQI5iR/ZkP6QyLlqs8Upit7qkggH6CQd4xYxOzH5Jqy1cYg+"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Security: Content Security Policy to prevent XSS -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
+        img-src 'self' data: https:;
+        font-src 'self' https://fonts.gstatic.com;
+        connect-src 'self' https://cloud.umami.is;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        frame-ancestors 'none';
+        upgrade-insecure-requests;
+    "
+    />
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
-    <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock %}">
-    <meta property="og:description" content="{{ config.description }}">
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="{{ current_url | default(value=config.base_url) }}"
+    />
+    <meta
+      property="og:title"
+      content="{% block og_title %}{{ config.title }}{% endblock %}"
+    />
+    <meta property="og:description" content="{{ config.description }}" />
     {% if page.slug %}
-    <meta property="og:image" content="{{ get_url(path='og_images/' ~ page.slug ~ '.png') }}">
+    <meta
+      property="og:image"
+      content="{{ get_url(path='og_images/' ~ page.slug ~ '.png') }}"
+    />
     {% else %}
-    <meta property="og:image" content="{{ get_url(path='logo.png') }}">
+    <meta property="og:image" content="{{ get_url(path='logo.png') }}" />
     {% endif %}
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ current_url | default(value=config.base_url) }}">
-    <meta property="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock %}">
-    <meta property="twitter:description" content="{{ config.description }}">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="{{ current_url | default(value=config.base_url) }}"
+    />
+    <meta
+      property="twitter:title"
+      content="{% block twitter_title %}{{ config.title }}{% endblock %}"
+    />
+    <meta property="twitter:description" content="{{ config.description }}" />
     {% if page.slug %}
-    <meta property="twitter:image" content="{{ get_url(path='og_images/' ~ page.slug ~ '.png') }}">
+    <meta
+      property="twitter:image"
+      content="{{ get_url(path='og_images/' ~ page.slug ~ '.png') }}"
+    />
     {% else %}
-    <meta property="twitter:image" content="{{ get_url(path='logo.png') }}">
+    <meta property="twitter:image" content="{{ get_url(path='logo.png') }}" />
     {% endif %}
 
     <!-- Article Meta Tags -->
-    {% if page %}
-        {% if page.date %}
-        <meta property="article:published_time" content="{{ page.date }}">
-        {% endif %}
-        {% if page.updated %}
-        <meta property="article:modified_time" content="{{ page.updated }}">
-        {% endif %}
-        <meta property="article:author" content="Burak Güngör">
-        {% if page.taxonomies.tags %}
-        {% for tag in page.taxonomies.tags %}
-        <meta property="article:tag" content="{{ tag }}">
-        {% endfor %}
-        {% endif %}
+    {% if page %} {% if page.date %}
+    <meta property="article:published_time" content="{{ page.date }}" />
+    {% endif %} {% if page.updated %}
+    <meta property="article:modified_time" content="{{ page.updated }}" />
     {% endif %}
+    <meta property="article:author" content="Burak Güngör" />
+    {% if page.taxonomies.tags %} {% for tag in page.taxonomies.tags %}
+    <meta property="article:tag" content="{{ tag }}" />
+    {% endfor %} {% endif %} {% endif %}
 
-    <link rel="icon" type="image/png" href="{{ get_url(path='logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ get_url(path='logo.png') }}" />
 
     <!-- Typography: IBM Plex with Preloading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&display=swap"
-        as="style">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&display=swap"
+      as="style"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- KaTeX for LaTeX support -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    { left: '$$', right: '$$', display: true },
-                    { left: '$', right: '$', display: false },
-                    { left: '\\(', right: '\\)', display: false },
-                    { left: '\\[', right: '\\]', display: true }
-                ],
-                throwOnError: false
-            });
-        });
-    </script>
 
-    <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
-    <script>
-        // Pre-set theme to avoid flicker
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    </script>
+    <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+
+    <!-- Theme script to prevent flicker -->
+    <script src="/js/theme.js"></script>
 
     <!-- Structured Data (JSON-LD) -->
-    {% if page %}
-        {# Article Schema for blog posts #}
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "{{ page.title }}",
-            "description": "{{ page.description | default(value=config.description) }}",
-            "image": "{% if page.slug %}{{ get_url(path='og_images/' ~ page.slug ~ '.png', absolute=true) }}{% else %}{{ get_url(path='logo.png', absolute=true) }}{% endif %}",
-            "author": {
-                "@type": "Person",
-                "name": "Burak Güngör",
-                "url": "{{ config.base_url }}",
-                "jobTitle": "Student",
-                "sameAs": [
-                    "https://github.com/burakgungor11235",
-                    "https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
-                ]
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "BGs Lab",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "{{ get_url(path='logo.png', absolute=true) }}"
-                }
-            },
-            "datePublished": "{{ page.date }}",
-            "dateModified": "{{ page.updated | default(value=page.date) }}",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "{{ current_url | default(value=config.base_url) }}"
-            },
-            "keywords": "{% if page.taxonomies.tags %}{{ page.taxonomies.tags | join(sep=", ") }}{% endif %}",
-            "articleSection": "{% if '/blog/' in current_url %}Technical Writing{% elif '/projects/' in current_url %}Engineering Projects{% else %}Blog{% endif %}"
-        }
-        </script>
-    {% else %}
-        {# WebSite Schema for homepage #}
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "BGs Lab",
-            "url": "{{ config.base_url }}",
-            "description": "{{ config.description }}",
-            "author": {
-                "@type": "Person",
-                "name": "Burak Güngör",
-                "url": "{{ config.base_url }}"
-            },
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": {
-                    "@type": "EntryPoint",
-                    "urlTemplate": "{{ config.base_url }}?s={search_term_string}"
-                },
-                "query-input": "required name=search_term_string"
-            }
-        }
-        </script>
-    {% endif %}
-
-    {# Organization Schema #}
+    {% if page %} {# Article Schema for blog posts #}
     <script type="application/ld+json">
-    {
+      {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "{{ page.title }}",
+          "description": "{{ page.description | default(value=config.description) }}",
+          "image": "{% if page.slug %}{{ get_url(path='og_images/' ~ page.slug ~ '.png', absolute=true) }}{% else %}{{ get_url(path='logo.png', absolute=true) }}{% endif %}",
+          "author": {
+              "@type": "Person",
+              "name": "Burak Güngör",
+              "url": "{{ config.base_url }}",
+              "jobTitle": "Student",
+              "sameAs": [
+                  "https://github.com/burakgungor11235",
+                  "https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
+              ]
+          },
+          "publisher": {
+              "@type": "Organization",
+              "name": "BGs Lab",
+              "logo": {
+                  "@type": "ImageObject",
+                  "url": "{{ get_url(path='logo.png', absolute=true) }}"
+              }
+          },
+          "datePublished": "{{ page.date }}",
+          "dateModified": "{{ page.updated | default(value=page.date) }}",
+          "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "{{ current_url | default(value=config.base_url) }}"
+          },
+          "keywords": "{% if page.taxonomies.tags %}{{ page.taxonomies.tags | join(sep=", ") }}{% endif %}",
+          "articleSection": "{% if '/blog/' in current_url %}Technical Writing{% elif '/projects/' in current_url %}Engineering Projects{% else %}Blog{% endif %}"
+      }
+    </script>
+    {% else %} {# WebSite Schema for homepage #}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "BGs Lab",
+        "url": "{{ config.base_url }}",
+        "description": "{{ config.description }}",
+        "author": {
+          "@type": "Person",
+          "name": "Burak Güngör",
+          "url": "{{ config.base_url }}"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "{{ config.base_url }}?s={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    {% endif %} {# Organization Schema #}
+    <script type="application/ld+json">
+      {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "BGs Lab",
@@ -165,327 +205,165 @@
         "description": "{{ config.description }}",
         "logo": "{{ get_url(path='logo.png', absolute=true) }}",
         "founder": {
-            "@type": "Person",
-            "name": "Burak Güngör"
+          "@type": "Person",
+          "name": "Burak Güngör"
         },
         "sameAs": [
-            "https://github.com/burakgungor11235",
-            "https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
+          "https://github.com/burakgungor11235",
+          "https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
         ],
         "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "author",
-            "email": "burakgungor11235@gmail.com"
+          "@type": "ContactPoint",
+          "contactType": "author",
+          "email": "burakgungor11235@gmail.com"
         }
-    }
+      }
     </script>
 
     {% block extra_head %}{% endblock %}
+  </head>
 
-</head>
-
-<body>
+  <body>
     <!-- Skip to Content Link (Accessibility) -->
     <a href="#main-content" class="skip-link">Skip to content</a>
 
     <!-- Reading Progress Bar -->
     <div class="reading-progress" aria-hidden="true">
-        <div class="reading-progress-bar" id="progress-bar"></div>
+      <div class="reading-progress-bar" id="progress-bar"></div>
     </div>
 
     <header>
-        <nav>
-            <div class="site-title">
-                <a href="{{ config.base_url }}">
-                    <span class="logo-bgs">bg's</span>
-                    <span class="logo-lab">   Lab</span>
-                </a>
-            </div>
-            <ul class="nav-links">
-                {% for item in config.extra.menu %}
-                <li><a href="{{ item.url | safe }}">{{ item.name }}</a></li>
-                {% endfor %}
-                <li><button class="theme-toggle" id="theme-toggle" title="Toggle Dark/Light Mode">Toggle Theme</button>
-                </li>
-            </ul>
-        </nav>
+      <nav>
+        <div class="site-title">
+          <a href="{{ config.base_url }}">
+            <span class="logo-bgs">bg's</span>
+            <span class="logo-lab"> Lab</span>
+          </a>
+        </div>
+        <ul class="nav-links">
+          {% for item in config.extra.menu %}
+          <li><a href="{{ item.url | safe }}">{{ item.name }}</a></li>
+          {% endfor %}
+          <li>
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              title="Toggle Dark/Light Mode"
+            >
+              Toggle Theme
+            </button>
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    <main id="main-content">
-        {% block content %}{% endblock %}
-    </main>
+    <main id="main-content">{% block content %}{% endblock %}</main>
 
     <footer class="site-footer">
-        <div class="footer-section">
-            <a href="mailto:burakgungor11235@gmail.com"
-                style="color: inherit; text-decoration: none;">burakgungor11235@gmail.com</a>
-        </div>
+      <div class="footer-section">
+        <a
+          href="mailto:burakgungor11235@gmail.com"
+          style="color: inherit; text-decoration: none"
+          >burakgungor11235@gmail.com</a
+        >
+      </div>
 
-        <div class="footer-section" style="text-align: center;">
-            <a href="https://github.com/burakgungor11235" target="_blank" rel="noopener"
-                style="text-decoration: none; color: inherit;">GITHUB</a> &nbsp;//&nbsp;
-            <a href="https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235" target="_blank" rel="noopener"
-                style="text-decoration: none; color: inherit;">LINKEDIN</a>
-        </div>
+      <div class="footer-section" style="text-align: center">
+        <a
+          href="https://github.com/burakgungor11235"
+          target="_blank"
+          rel="noopener"
+          style="text-decoration: none; color: inherit"
+          >GITHUB</a
+        >
+        &nbsp;//&nbsp;
+        <a
+          href="https://www.linkedin.com/in/burak-g%C3%BCng%C3%B6r11235"
+          target="_blank"
+          rel="noopener"
+          style="text-decoration: none; color: inherit"
+          >LINKEDIN</a
+        >
+      </div>
 
-        <div class="footer-section" style="text-align: right;">
-            <span class="footer-geo">Burak Güngör</span> &bull; {{ now() | date(format="%Y") }}
-        </div>
+      <div class="footer-section" style="text-align: right">
+        <span class="footer-geo">Burak Güngör</span> &bull; {{ now() |
+        date(format="%Y") }}
+      </div>
     </footer>
 
-    <script>
-        // Reading Progress Bar
-        const progressBar = document.getElementById('progress-bar');
-        if (progressBar) {
-            function updateProgress() {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollPercent = (scrollTop / docHeight) * 100;
-                progressBar.style.width = scrollPercent + '%';
-            }
-
-            window.addEventListener('scroll', updateProgress, { passive: true });
-            updateProgress(); // Initial call
-        }
-
-        // Theme Toggle Logic
-        const toggleBtn = document.getElementById('theme-toggle');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-            });
-        }
-
-        // Code Copy Logic
-        document.querySelectorAll('pre').forEach((block) => {
-            const code = block.querySelector('code');
-            if (code) {
-                const button = document.createElement('button');
-                button.innerText = 'Copy';
-                button.className = 'copy-btn';
-                block.appendChild(button);
-
-                button.addEventListener('click', async () => {
-                    await navigator.clipboard.writeText(code.innerText);
-                    button.innerText = 'Copied';
-                    setTimeout(() => {
-                        button.innerText = 'Copy';
-                    }, 2000);
-                });
-            }
-        });
-
-        // Footnote Hover Preview Logic
-        const refs = document.querySelectorAll('.footnote-reference a');
-        const popover = document.createElement('div');
-        popover.className = 'footnote-popover';
-        document.body.appendChild(popover);
-
-        refs.forEach(ref => {
-            ref.addEventListener('mouseenter', function (e) {
-                // Robust ID extraction from href (handles full URLs and hashes)
-                const href = this.getAttribute('href');
-                if (!href) return;
-
-                const id = href.includes('#') ? href.split('#')[1] : null;
-                if (!id) return;
-
-                const footnote = document.getElementById(id);
-                if (footnote) {
-                    const content = footnote.cloneNode(true);
-                    const backref = content.querySelector('.footnote-backref');
-                    if (backref) backref.remove();
-
-                    popover.innerHTML = content.innerHTML;
-                    popover.classList.add('visible');
-
-                    const rect = this.getBoundingClientRect();
-                    const popoverRect = popover.getBoundingClientRect();
-
-                    let left = rect.left + window.scrollX;
-                    let top = rect.bottom + window.scrollY + 10;
-
-                    // Keep popover on screen
-                    if (left + 300 > window.innerWidth) {
-                        left = window.innerWidth - 320;
-                    }
-
-                    popover.style.left = `${left}px`;
-                    popover.style.top = `${top}px`;
-                }
-            });
-
-            ref.addEventListener('mouseleave', function () {
-                popover.classList.remove('visible');
-            });
-        });
-
-        // TOC Active State & Accordion Logic
-        const tocLinks = document.querySelectorAll('.toc-list a');
-        const sections = document.querySelectorAll('.content-text h1, .content-text h2, .content-text h3');
-
-        if (tocLinks.length > 0 && sections.length > 0) {
-            const observerOptions = {
-                root: null,
-                rootMargin: '-10% 0px -85% 0px',
-                threshold: 0
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.id;
-                        if (!id) return;
-
-                        tocLinks.forEach(link => link.classList.remove('active'));
-                        document.querySelectorAll('.toc-list li').forEach(li => li.classList.remove('expanded'));
-
-                        let activeLink = null;
-                        try {
-                            activeLink = document.querySelector(`.toc-list a[href="#${CSS.escape(id)}"]`);
-                            if (!activeLink) {
-                                tocLinks.forEach(link => {
-                                    const href = link.getAttribute('href');
-                                    if (href && href.endsWith(`#${id}`)) {
-                                        activeLink = link;
-                                    }
-                                });
-                            }
-                        } catch (e) {
-                            console.warn('TOC Error: Invalid ID selector', id);
-                        }
-
-                        if (activeLink) {
-                            activeLink.classList.add('active');
-                            let parentLi = activeLink.closest('li');
-                            while (parentLi) {
-                                parentLi.classList.add('expanded');
-                                parentLi = parentLi.parentElement.closest('li');
-                            }
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => {
-                if (section.id) {
-                    observer.observe(section);
-                }
-            });
-        }
-    </script>
+    <!-- Main JavaScript -->
+    <script src="/js/main.js" defer></script>
 
     <!-- Cookie Consent Banner -->
-    <div id="cookie-consent" class="cookie-consent" style="display: none;">
+    <div id="cookie-consent" class="cookie-consent" style="display: none">
       <p class="cookie-text">
         We use cookies for analytics to improve your experience.
         <a href="/privacy">Privacy Policy</a>
       </p>
       <div class="cookie-actions">
-        <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
-        <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button>
+        <button id="cookie-accept" class="cookie-btn cookie-btn-primary">
+          Accept
+        </button>
+        <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">
+          Reject
+        </button>
       </div>
     </div>
 
     <style>
-    .cookie-consent {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--bg-color);
-      border-top: 1px solid var(--border-color);
-      padding: 1rem 2rem;
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      gap: 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      z-index: 9999;
-      color: var(--text-primary);
-    }
-    .cookie-text {
-      margin: 0;
-      color: var(--text-primary);
-    }
-    .cookie-text a {
-      color: var(--accent-interactive);
-    }
-    .cookie-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-    .cookie-btn {
-      padding: 0.5rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-    .cookie-btn-primary {
-      background: var(--accent-interactive);
-      color: #ffffff;
-    }
-    .cookie-btn-primary:hover {
-      background: #0353e9;
-    }
-    .cookie-btn-secondary {
-      background: var(--code-bg);
-      color: var(--text-primary);
-    }
-    .cookie-btn-secondary:hover {
-      background: var(--text-secondary);
-      color: var(--bg-color);
-    }
-    </style>
-
-    <script>
-    // Cookie Consent Logic
-    const CONSENT_KEY = 'BGsLab_consent';
-
-    function initConsent() {
-      const banner = document.getElementById('cookie-consent');
-      const consent = localStorage.getItem(CONSENT_KEY);
-      if (!consent) {
-        banner.style.display = 'flex';
-      } else {
-        const data = JSON.parse(consent);
-        if (data.analytics) enableAnalytics();
+      .cookie-consent {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-color);
+        border-top: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        z-index: 9999;
+        color: var(--text-primary);
       }
-    }
-
-    function loadUmami() {
-      const script = document.createElement('script');
-      script.defer = true;
-      script.src = 'https://cloud.umami.is/script.js';
-      script.setAttribute('data-website-id', 'f5944805-c487-4a5a-ab0e-5cccaa1a6a5c');
-      document.head.appendChild(script);
-    }
-
-    function enableAnalytics() {
-      loadUmami();
-    }
-
-    function saveConsent(analytics) {
-      localStorage.setItem(CONSENT_KEY, JSON.stringify({
-        analytics: analytics,
-        timestamp: new Date().toISOString()
-      }));
-      document.getElementById('cookie-consent').style.display = 'none';
-      if (analytics) enableAnalytics();
-    }
-
-    document.getElementById('cookie-accept').onclick = function() { saveConsent(true); };
-    document.getElementById('cookie-reject').onclick = function() { saveConsent(false); };
-
-    document.addEventListener('DOMContentLoaded', initConsent);
-    </script>
-</body>
-
+      .cookie-text {
+        margin: 0;
+        color: var(--text-primary);
+      }
+      .cookie-text a {
+        color: var(--accent-interactive);
+      }
+      .cookie-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .cookie-btn {
+        padding: 0.5rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        border: 1px solid transparent;
+      }
+      .cookie-btn-primary {
+        background: var(--accent-interactive);
+        color: #ffffff;
+      }
+      .cookie-btn-primary:hover {
+        background: #0353e9;
+      }
+      .cookie-btn-secondary {
+        background: var(--code-bg);
+        color: var(--text-primary);
+      }
+      .cookie-btn-secondary:hover {
+        background: var(--text-secondary);
+        color: var(--bg-color);
+      }
+    </style>
+  </body>
 </html>
